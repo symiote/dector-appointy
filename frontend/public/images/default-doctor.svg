@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="100%" height="100%" fill="#EAEFFF"/>
+  <g transform="translate(200,150)">
+    <circle cx="0" cy="-30" r="48" fill="#b8d0ff" stroke="#8fb0ff" stroke-width="4"/>
+    <rect x="-80" y="40" width="160" height="70" rx="10" fill="#dfeeff" stroke="#c0dbff" stroke-width="3"/>
+    <text x="0" y="95" text-anchor="middle" fill="#6181d6" font-size="16" font-family="Arial">Default Doctor</text>
+  </g>
+</svg>

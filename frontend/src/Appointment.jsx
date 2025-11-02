@@ -128,9 +128,9 @@ const Appointment = () => {
       <div>
         {/* Doctor details */}
         <div className='flex flex-col sm:flex-row gap-4'>
-          <div>
+          {/* <div>
             <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.image} alt="" />
-          </div>
+          </div> */}
           <div className='flex-1 border border-[#ADADAD] rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
             <p className='flex items-center gap-2 text-3xl font-medium text-gray-700'>
               {docInfo.name} <img src={assets.verified_icon} alt="" />

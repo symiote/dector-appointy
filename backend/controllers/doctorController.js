@@ -10,12 +10,16 @@ const loginDoctor = async (req, res) => {
     const user = await doctorModel.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -46,10 +50,14 @@ const appointmentCancel = async (req, res) => {
 
     const appointment = await appointmentModel.findById(appointmentId);
     if (!appointment || appointment.docId.toString() !== docId) {
-      return res.status(403).json({ success: false, message: "Invalid doctor or appointment" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid doctor or appointment" });
     }
 
-    await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
     res.json({ success: true, message: "Appointment Cancelled" });
   } catch (error) {
     console.error(error);
@@ -65,10 +73,14 @@ const appointmentComplete = async (req, res) => {
 
     const appointment = await appointmentModel.findById(appointmentId);
     if (!appointment || appointment.docId.toString() !== docId) {
-      return res.status(403).json({ success: false, message: "Invalid doctor or appointment" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid doctor or appointment" });
     }
 
-    await appointmentModel.findByIdAndUpdate(appointmentId, { isCompleted: true });
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      isCompleted: true,
+    });
     res.json({ success: true, message: "Appointment Completed" });
   } catch (error) {
     console.error(error);
@@ -80,6 +92,14 @@ const appointmentComplete = async (req, res) => {
 const doctorList = async (req, res) => {
   try {
     const doctors = await doctorModel.find({}).select("-password -email");
+    console.log(
+      "Fetched doctors:",
+      doctors.map((doc) => ({
+        id: doc._id,
+        name: doc.name,
+        imageUrl: doc.image,
+      }))
+    );
     res.json({ success: true, doctors });
   } catch (error) {
     console.error(error);
@@ -88,18 +108,22 @@ const doctorList = async (req, res) => {
 };
 
 // Toggle doctor's availability
-  const changeAvailability = async (req, res) => {
+const changeAvailability = async (req, res) => {
   try {
     const { docId } = req.body;
 
     if (!docId) {
-      return res.status(400).json({ success: false, message: "Doctor ID missing" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Doctor ID missing" });
     }
 
     const doctor = await doctorModel.findById(docId);
 
     if (!doctor) {
-      return res.status(404).json({ success: false, message: "Doctor not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Doctor not found" });
     }
 
     doctor.available = !doctor.available;
@@ -111,7 +135,6 @@ const doctorList = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 // Get doctor's profile
 const doctorProfile = async (req, res) => {
@@ -144,7 +167,6 @@ const updateDoctorProfile = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 // Get dashboard data
 const doctorDashboard = async (req, res) => {
